@@ -2,6 +2,7 @@ package cn.bruce.springboot.bean;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -14,15 +15,25 @@ import java.util.Map;
  * @author Bruce
  * @create 2020-10-09 11:06
  */
+/**
+ * 将配置文件中配置的每一个属性的值，映射到这个组件中
+ * @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
+ *      prefix = "person"：配置文件中哪个下面的所有属性进行一一映射
+ *
+ * 只有这个组件是容器中的组件，才能容器提供的@ConfigurationProperties功能；
+ *  @ConfigurationProperties(prefix = "person")默认从全局配置文件中获取值；
+ *
+ */
+
 @Component
+@PropertySource(value = {"classpath:person.properties"})
 @ConfigurationProperties(prefix = "person")
-@Validated
 public class Person {
 
-    @Email
+//    @Value("${person.last-name}")
     private String lastName;
 
-    @Value("#{11*2}")
+//    @Value("#{11*2}")
     private Integer age;
     private Boolean boss;
 
@@ -30,6 +41,25 @@ public class Person {
     private Map<String, Object> maps;
     private List<Object> lists;
     private Dog dog;
+
+    private Map<String, Object> mapsInline;
+    private List<Object> listsInline;
+
+    public Map<String, Object> getMapsInline() {
+        return mapsInline;
+    }
+
+    public void setMapsInline(Map<String, Object> mapsInline) {
+        this.mapsInline = mapsInline;
+    }
+
+    public List<Object> getListsInline() {
+        return listsInline;
+    }
+
+    public void setListsInline(List<Object> listsInline) {
+        this.listsInline = listsInline;
+    }
 
     public String getLastName() {
         return lastName;
@@ -97,6 +127,8 @@ public class Person {
                 ", maps=" + maps +
                 ", lists=" + lists +
                 ", dog=" + dog +
+                ", mappsInline=" + mapsInline +
+                ", listsInline=" + listsInline +
                 '}';
     }
 }

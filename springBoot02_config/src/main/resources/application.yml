@@ -1,17 +1,20 @@
+#默认配置
 server:
   port: 8081
 spring:
   profiles:
-    active: prod
+    active: dev
 
 ---
+#开发环境
 server:
   port: 8083
 spring:
   profiles: dev
 
 ---
+#生产环境
 server:
-  port:8084
+  port: 8084
 spring:
   profiles: prod
