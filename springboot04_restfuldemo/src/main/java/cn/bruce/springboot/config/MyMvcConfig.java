@@ -1,9 +1,11 @@
 package cn.bruce.springboot.config;
 
+import cn.bruce.springboot.component.LoginHandlerInterceptor;
 import cn.bruce.springboot.component.MyLocaleRrsovler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,14 +23,26 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
         /**
-         * 添加视图映射
+         * 添加视图映射，自定义配置和自动配置组件会一起加载
          */
         WebMvcConfigurer webMvcConfigurer = new WebMvcConfigurer() {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
                 registry.addViewController("/").setViewName("login");
-                registry.addViewController("/login.html").setViewName("login");
+                registry.addViewController("/index.html").setViewName("login");
                 registry.addViewController("/main.html").setViewName("dashboard");
+            }
+
+            /**
+             * 注册拦截器
+             * @param registry
+             */
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                // 拦截除去登陆页面的，所有的页面请求，只有登录后才能访问全部的页面
+                // SpringBoot已经做好了静态资源映射
+                registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+                        .excludePathPatterns("/index.html", "/", "/user/login");
             }
         };
         return webMvcConfigurer;
