@@ -59,32 +59,34 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>lastName</th>
+                        <th>name</th>
                         <th>email</th>
                         <th>gender</th>
                         <th>department</th>
-                        <th>birth</th>
+                        <th>birthday</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="emp:${emps}">
                         <td th:text="${emp.id}"></td>
-                        <td>[[${emp.lastName}]]</td>
+                        <td>[[${emp.name}]]</td>
                         <td th:text="${emp.email}"></td>
                         <td th:text="${emp.gender}==0?'女':'男'"></td>
                         <td th:text="${emp.department.departmentName}"></td>
-                        <td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${#dates.format(emp.birthday, 'yyyy/MM/dd')}"></td>
                         <td>
                             <a class="btn btn-sm btn-primary" th:href="@{/emp/}+${emp.id}">编辑</a>
-                            <button th:attr="del_uri=@{/emp/}+${emp.id}" class="btn btn-sm btn-danger deleteBtn">删除</button>
+                                <button th:attr="del_uri=@{/emp/}+${emp.id}" th:method="post"
+                                        class="btn btn-sm btn-danger deleteBtn">删除
+                            </button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </main>
-        <form id="deleteEmpForm"  method="post">
+        <form id="deleteEmpForm" method="post">
             <input type="hidden" name="_method" value="delete"/>
         </form>
     </div>
@@ -93,9 +95,12 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
-<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
-<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"
+        th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js"
+        th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
 
 <!-- Icons -->
 <script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
@@ -103,9 +108,9 @@
     feather.replace()
 </script>
 <script>
-    $(".deleteBtn").click(function(){
+    $(".deleteBtn").click(function () {
         //删除当前员工的
-        $("#deleteEmpForm").attr("action",$(this).attr("del_uri")).submit();
+        $("#deleteEmpForm").attr("action", $(this).attr("del_uri")).submit();
         return false;
     });
 </script>
