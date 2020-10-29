@@ -1,6 +1,9 @@
 package cn.bruce.springboot.controller;
 
+import cn.bruce.springboot.exception.UserNotExistException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Bruce
@@ -13,5 +16,14 @@ public class TestController {
     public String index() {
         return "index";
     }*/
+
+    @RequestMapping("/hello")
+    public String hello(@RequestParam("user") String user){
+
+        if (("123").equals(user)) {
+            throw new UserNotExistException();
+        }
+        return "Hello Word";
+    }
 
 }
