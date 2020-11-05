@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bruce.springboot.dao.IAccountDao">
+
+    <!-- 根据id获取账户信息 -->
+    <select id="getAccountById" resultType="cn.bruce.springboot.domain.Account">
+        select * from account where ID = #{id}
+    </select>
+
+    <!-- 获取全部账户 -->
+    <select id="getAccounts" parameterType="java.lang.Integer" resultType="cn.bruce.springboot.domain.Account">
+        select * from account
+    </select>
+
+    <!-- 保存账户信息 -->
+    <insert id="saveAccount" parameterType="cn.bruce.springboot.domain.Account">
+        insert into account(id, uid, money) value (#{id}, #{uid}, #{money})
+    </insert>
+
+    <!-- 根据id删除用户 -->
+    <select id="deleteAccountById" parameterType="java.lang.Integer">
+        delete from account where ID = #{id}
+    </select>
+
+    <!-- 更新账户信息 -->
+    <update id="updateAccount" parameterType="cn.bruce.springboot.domain.Account">
+        update account set ID = #{id}, UID = #{uid}, MONEY = #{money}
+    </update>
+
+
+</mapper>
