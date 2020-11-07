@@ -1,0 +1,5 @@
+org.springframework.context.ApplicationContextInitializer=\
+  cn.bruce.springboot06_theory.listener.TestApplicationContextInitializer
+
+org.springframework.boot.SpringApplicationRunListener=\
+  cn.bruce.springboot06_theory.listener.TestSpringApplicationRunListener
